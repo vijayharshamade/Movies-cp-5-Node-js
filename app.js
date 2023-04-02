@@ -44,6 +44,7 @@ const convertDirectorDbObjectToResponseObject = (dbObject) => {
   };
 };
 
+//Get Movies API
 app.get("/movies/", async (request, response) => {
   const getMoviesQuery = `
     SELECT
@@ -56,6 +57,7 @@ app.get("/movies/", async (request, response) => {
   );
 });
 
+//Get Movie API
 app.get("/movies/:movieId/", async (request, response) => {
   const { movieId } = request.params;
   const getMovieQuery = `
@@ -69,6 +71,7 @@ app.get("/movies/:movieId/", async (request, response) => {
   response.send(convertMovieDbObjectToResponseObject(movie));
 });
 
+//ADD MOVIE API
 app.post("/movies/", async (request, response) => {
   const { directorId, movieName, leadActor } = request.body;
   const postMovieQuery = `
@@ -78,11 +81,10 @@ app.post("/movies/", async (request, response) => {
     (${directorId}, '${movieName}', '${leadActor}');`;
   await database.run(postMovieQuery);
   response.send("Movie Successfully Added");
-  //const dbResponse = await db.run(addMovieQuery);
-  // const movieId = dbResponse.lastID;
-  // response.send({ movieId: movieId });
 });
 
+
+//UPDATE MOVIE API
 app.put("/movies/:movieId/", async (request, response) => {
   const { directorId, movieName, leadActor } = request.body;
   const { movieId } = request.params;
@@ -100,6 +102,7 @@ app.put("/movies/:movieId/", async (request, response) => {
   response.send("Movie Details Updated");
 });
 
+//DELETE MOVIE API
 app.delete("/movies/:movieId/", async (request, response) => {
   const { movieId } = request.params;
   const deleteMovieQuery = `
@@ -111,6 +114,7 @@ app.delete("/movies/:movieId/", async (request, response) => {
   response.send("Movie Removed");
 });
 
+//GET DIRECTORS API
 app.get("/directors/", async (request, response) => {
   const getDirectorsQuery = `
     SELECT
@@ -125,6 +129,7 @@ app.get("/directors/", async (request, response) => {
   );
 });
 
+//GET DIRECTOR MOVIES API
 app.get("/directors/:directorId/movies/", async (request, response) => {
   const { directorId } = request.params;
   const getDirectorMoviesQuery = `
